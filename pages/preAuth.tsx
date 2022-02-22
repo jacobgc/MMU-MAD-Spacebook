@@ -1,17 +1,30 @@
 import { StyleSheet, View, Button } from 'react-native'
-import UserProfileImage from '../components/userProfileImage';
 import { User } from '../types/user';
-import { TypedNavigator } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../App';
-
+import { StackedRootStackParamList } from '../types/pages'
+import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loginResponse } from '../types/responses';
 
 export type UserProfileProps = {
     user: User;
 };
 
-type Props = NativeStackScreenProps<RootStackParamList, 'PreAuth'>;
+type Props = NativeStackScreenProps<StackedRootStackParamList, 'PreAuth'>;
 export default function PreAuthPage({ navigation }: Props) {
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('@spacebook_current_user')
+            if (value !== null) {
+                navigation.navigate('Authed')
+            }
+        } catch (e) {
+            console.log('Failed to get @spacebook_current_user')
+        }
+    }
+
+    getData()
+
     return (
         <View style={styles.topContent}>
             <Button title='Login' onPress={() => navigation.navigate('Login')} />

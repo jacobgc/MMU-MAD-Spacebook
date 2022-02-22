@@ -2,8 +2,8 @@ import { StyleSheet, View, Text, TextInput, Button } from 'react-native'
 import { User } from '../types/user';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
-import { RootStackParamList } from '../types/pages';
-import postRequestJSON from '../utils/postRequest';
+import { StackedRootStackParamList } from '../types/pages';
+import { postRequestJSON } from '../utils/requests';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 
@@ -12,7 +12,7 @@ export type UserProfileProps = {
     user: User;
 };
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Register'>;
+type Props = NativeStackScreenProps<StackedRootStackParamList, 'Register'>;
 export default function RegisterPage({ navigation }: Props) {
 
     let [email, setEmail] = useState<string>('');
@@ -27,9 +27,6 @@ export default function RegisterPage({ navigation }: Props) {
     let [errorMessage, setErrorMessage] = useState<string>('')
 
     async function register() {
-
-        console.log("Register")
-
         // TODO validation
 
         try {
@@ -39,24 +36,20 @@ export default function RegisterPage({ navigation }: Props) {
                 email: email,
                 password: password
             })
-
             setShowSuccess(true)
-
-        } catch (error: any) {
-
-            console.log(error)
-
+        } catch (err) {
+            const error = err as Error
             if (error.message.includes('Possibly duplicate entry')) {
                 setErrorMessage('Provided email already has an account')
             } else if (error.message.includes('email must be valid and password greater than 5 characters')) {
                 setErrorMessage('Email must be valid and password must be greater than 5 characters')
+            } else if (error.message.includes('email must be correct')) {
+                setErrorMessage('Please ensure all fields are filled out')
             } else {
                 setErrorMessage("An unknown error occurred")
             }
-
             setShowError(true)
         }
-
     }
 
     function goToLogin() {
