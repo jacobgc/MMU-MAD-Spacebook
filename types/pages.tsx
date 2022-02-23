@@ -7,5 +7,10 @@ export type StackedRootStackParamList = {
 
 export type TabbedRootStackParamList = {
     Feed: undefined;
-    Profile: { userID: number };
+    ProfileNavigator: { userID: number };
 };
+
+export type StackedTabbedParamList = {
+    Profile: { userID: number }
+    AccountSettings: { userID: number, updateTrigger: React.Dispatch<React.SetStateAction<boolean>> };
+}

@@ -1,6 +1,6 @@
 // User Management
 
 export type loginResponse = {
-    id: string
+    id: number
     token: string
 }
