@@ -1,26 +1,31 @@
 import { View } from 'react-native'
 import { Avatar } from 'native-base'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getRequestBinary } from '../utils/requests';
+import { SpaceBookAPI } from '../classes/SpaceBookAPI';
 
 export type UserProfileImagesProps = {
-    userID: string | undefined;
+    userID: number | undefined;
 };
 
 export default function UserProfileImage(props: UserProfileImagesProps) {
     let [profileImage, setProfileImage] = useState<string>();
 
-    if (props.userID != null) {
+    useEffect(() => {
         async function getImage() {
-            const blob = await getRequestBinary(`http://localhost:3333/api/1.0.0/user/${props.userID}/photo`, true) as string
-            console.log(blob)
-            setProfileImage(blob)
+
+            if (props.userID != undefined) {
+                const api = new SpaceBookAPI()
+                const profileImage = await api.userManagement.getProfileImage(props.userID)
+
+                setProfileImage(profileImage)
+            }
+
         }
 
-        if (profileImage == null) {
-            getImage()
-        }
-    }
+        getImage()
+    }, [props.userID])
+
 
     return (
         <View>

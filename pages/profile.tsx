@@ -1,18 +1,18 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Box, Button } from "native-base";
+import { View, Box } from "native-base";
 import { useEffect, useState } from "react";
+import { SpaceBookAPI } from "../classes/SpaceBookAPI";
 import UserEditControls from "../components/profileControls";
 import { SharedProfile } from "../components/sharedProfile";
-import { StackedTabbedParamList, TabbedRootStackParamList } from "../types/pages";
-import { User } from "../types/user";
+import { StackedTabbedParamList } from "../types/pages";
+import { userInfoResponse } from "../types/responses";
 import getCurrentUser from "../utils/getCurrentUser";
-import { getRequestJSON } from "../utils/requests";
 
 type Props = NativeStackScreenProps<StackedTabbedParamList, 'Profile'>;
 export default function Profile({ navigation, route }: Props) {
     let providedUserID = route.params.userID
     let [showEditControls, setShowEditControls] = useState<boolean>(false)
-    let [user, setUser] = useState<User>({} as User)
+    let [user, setUser] = useState<userInfoResponse>({} as userInfoResponse)
     let [needsUpdate, setNeedsUpdate] = useState<boolean>(false)
 
     useEffect(() => {
@@ -29,7 +29,10 @@ export default function Profile({ navigation, route }: Props) {
                 userIDToLoad = providedUserID
             }
             console.log('Loading user')
-            const userResponse = await getRequestJSON(`http://localhost:3333/api/1.0.0/user/${userIDToLoad}`, true) as User
+
+            const api = new SpaceBookAPI()
+            const userResponse = await api.userManagement.getUserInfo(userIDToLoad)
+
             setUser(userResponse)
             setNeedsUpdate(false)
         }

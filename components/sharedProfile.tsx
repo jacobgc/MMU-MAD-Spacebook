@@ -2,9 +2,10 @@ import { View } from 'react-native'
 import { User } from "../types/user";
 import { Box, Center, Avatar, Text } from 'native-base'
 import UserProfileImage from './userProfileImage';
+import { userInfoResponse } from '../types/responses';
 
 export type sharedProfileProps = {
-    user: User | undefined;
+    user: userInfoResponse | undefined;
 };
 
 export function SharedProfile(props: sharedProfileProps) {

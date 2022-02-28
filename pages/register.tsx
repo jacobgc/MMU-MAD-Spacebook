@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { StackedRootStackParamList } from '../types/pages';
 import { postRequestJSON } from '../utils/requests';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import { SpaceBookAPI } from '../classes/SpaceBookAPI';
 
 
 
@@ -30,13 +31,12 @@ export default function RegisterPage({ navigation }: Props) {
         // TODO validation
 
         try {
-            await postRequestJSON('http://localhost:3333/api/1.0.0/user', {
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                password: password
-            })
+            const api = new SpaceBookAPI()
+
+            api.userManagement.register(email, firstName, lastName, password)
+
             setShowSuccess(true)
+
         } catch (err) {
             const error = err as Error
             if (error.message.includes('Possibly duplicate entry')) {
@@ -50,6 +50,7 @@ export default function RegisterPage({ navigation }: Props) {
             }
             setShowError(true)
         }
+
     }
 
     function goToLogin() {

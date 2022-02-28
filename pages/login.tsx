@@ -7,6 +7,7 @@ import { postRequestJSON } from '../utils/requests';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { loginResponse } from '../types/responses';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SpaceBookAPI } from '../classes/SpaceBookAPI';
 
 export type UserProfileProps = {
     user: User;
@@ -24,12 +25,12 @@ export default function LoginPage({ navigation }: Props) {
     async function attemptLogin() {
         try {
 
-            const response = await postRequestJSON('http://localhost:3333/api/1.0.0/login', {
-                email: email,
-                password: password
-            }) as loginResponse
+            const api = new SpaceBookAPI()
+            const loginResponse = await api.userManagement.login(email, password)
 
-            await AsyncStorage.setItem('@spacebook_current_user', JSON.stringify(response))
+            console.log(loginResponse)
+
+            await AsyncStorage.setItem('@spacebook_current_user', JSON.stringify(loginResponse))
 
             navigation.navigate('Authed')
 

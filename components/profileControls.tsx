@@ -1,8 +1,8 @@
 import AsyncStorageLib from "@react-native-async-storage/async-storage";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { View, Box, Button } from "native-base";
+import { SpaceBookAPI } from "../classes/SpaceBookAPI";
 import { StackedTabbedParamList } from "../types/pages";
-import { getRequestJSON, postRequestText } from "../utils/requests";
 
 export type UserEditControlsProps = {
     userID: number;
@@ -13,8 +13,9 @@ export type UserEditControlsProps = {
 
 async function handleLogout(userID: number, navigator: any) {
 
-    postRequestText('http://localhost:3333/api/1.0.0/logout', {}, true)
+    const api = new SpaceBookAPI()
 
+    await api.userManagement.logout()
     AsyncStorageLib.removeItem('@spacebook_current_user')
 
     navigator.navigate('PreAuth')
