@@ -16,3 +16,10 @@ export type userInfoResponse = {
     email: string,
     friend_count: number
 }
+
+export type searchResponse = {
+    user_id: number,
+    user_givenname: string,
+    user_familyname: string,
+    user_email: string
+}

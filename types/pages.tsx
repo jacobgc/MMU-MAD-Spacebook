@@ -8,6 +8,7 @@ export type StackedRootStackParamList = {
 export type TabbedRootStackParamList = {
     Feed: undefined;
     ProfileNavigator: { userID: number };
+    Search: undefined;
 };
 
 export type StackedTabbedParamList = {
