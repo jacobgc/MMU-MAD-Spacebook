@@ -1,15 +1,15 @@
-import { FriendManagement } from "./FriendManagementAPI"
-import { UserManagementAPI } from "./UserManagementAPI"
+import FriendManagementAPI from './FriendManagementAPI';
+import UserManagementAPI from './UserManagementAPI';
 
-export class SpaceBookAPI {
+export default class SpaceBookAPI {
+  API_BASE: string = 'http://localhost:3333/api/1.0.0';
 
-    API_BASE: string = "http://localhost:3333/api/1.0.0"
-    userManagement: UserManagementAPI
-    friendManagement: FriendManagement
+  userManagement: UserManagementAPI;
 
-    constructor() {
-        this.userManagement = new UserManagementAPI(this.API_BASE)
-        this.friendManagement = new FriendManagement(this.API_BASE)
-    }
+  friendManagement: FriendManagementAPI;
 
+  constructor() {
+    this.userManagement = new UserManagementAPI(this.API_BASE);
+    this.friendManagement = new FriendManagementAPI(this.API_BASE);
+  }
 }

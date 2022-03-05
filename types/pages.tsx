@@ -1,5 +1,3 @@
-
-
 export type StackedRootStackParamList = {
     PreAuth: undefined;
     Login: undefined;

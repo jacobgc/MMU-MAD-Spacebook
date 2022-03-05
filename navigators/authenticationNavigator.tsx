@@ -1,10 +1,11 @@
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
-import LoginPage from "../pages/login";
-import PreAuthPage from "../pages/preAuth";
-import RegisterPage from "../pages/register";
-import { RootNavigator } from "./rootNavigator";
+import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
+import LoginPage from '../pages/login';
+import PreAuthPage from '../pages/preAuth';
+import RegisterPage from '../pages/register';
+import { RootNavigatorParams } from './rootNavigator';
 
-export type AuthenticationNavigator = {
+export type AuthenticationNavigatorParams = {
     PreAuth: {
         setIsAuthed: React.Dispatch<React.SetStateAction<boolean>>
     };
@@ -14,16 +15,15 @@ export type AuthenticationNavigator = {
     Register: undefined;
 };
 
-type Props = NativeStackScreenProps<RootNavigator, 'Authentication'>;
-export default function AuthenticationNavigator({ route, navigation }: Props) {
-    const Stack = createNativeStackNavigator<AuthenticationNavigator>();
+type Props = NativeStackScreenProps<RootNavigatorParams, 'Authentication'>;
+export default function AuthenticationNavigator({ route }: Props) {
+  const Stack = createNativeStackNavigator<AuthenticationNavigatorParams>();
 
-    return (
-        <Stack.Navigator initialRouteName="PreAuth">
-            <Stack.Screen options={{ headerShown: false }} initialParams={{ setIsAuthed: route.params.setIsAuthed }} name="PreAuth" component={PreAuthPage}></Stack.Screen>
-            <Stack.Screen name="Login" initialParams={{ setIsAuthed: route.params.setIsAuthed }} component={LoginPage}></Stack.Screen>
-            <Stack.Screen name="Register" component={RegisterPage}></Stack.Screen>
-        </Stack.Navigator>
-    )
-
+  return (
+    <Stack.Navigator initialRouteName="PreAuth">
+      <Stack.Screen options={{ headerShown: false }} initialParams={{ setIsAuthed: route.params.setIsAuthed }} name="PreAuth" component={PreAuthPage} />
+      <Stack.Screen name="Login" initialParams={{ setIsAuthed: route.params.setIsAuthed }} component={LoginPage} />
+      <Stack.Screen name="Register" component={RegisterPage} />
+    </Stack.Navigator>
+  );
 }
