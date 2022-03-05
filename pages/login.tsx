@@ -2,19 +2,17 @@ import { StyleSheet, View, Button, TextInput } from 'react-native'
 import { User } from '../types/user';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
-import { StackedRootStackParamList } from '../types/pages';
-import { postRequestJSON } from '../utils/requests';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import { loginResponse } from '../types/responses';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SpaceBookAPI } from '../classes/SpaceBookAPI';
+import { AuthenticationNavigator } from '../navigators/authenticationNavigator';
 
 export type UserProfileProps = {
     user: User;
 };
 
-type Props = NativeStackScreenProps<StackedRootStackParamList, 'Login'>;
-export default function LoginPage({ navigation }: Props) {
+type Props = NativeStackScreenProps<AuthenticationNavigator, 'Login'>;
+export default function LoginPage({ route, navigation }: Props) {
 
     let [email, setEmail] = useState<string>('');
     let [password, setPassword] = useState<string>('');
@@ -32,7 +30,7 @@ export default function LoginPage({ navigation }: Props) {
 
             await AsyncStorage.setItem('@spacebook_current_user', JSON.stringify(loginResponse))
 
-            navigation.navigate('Authed')
+            route.params.setIsAuthed(true)
 
         } catch (err) {
             const error = err as Error

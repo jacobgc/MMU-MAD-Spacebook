@@ -7,18 +7,19 @@ import { StackedTabbedParamList } from "../types/pages";
 export type UserEditControlsProps = {
     userID: number;
     navigator: NativeStackNavigationProp<StackedTabbedParamList, "Profile">
+    setIsAuthed: React.Dispatch<React.SetStateAction<boolean>>
     show: boolean
     updateTrigger: React.Dispatch<React.SetStateAction<boolean>>
 };
 
-async function handleLogout(userID: number, navigator: any) {
+async function handleLogout(userID: number, setIsAuthed: React.Dispatch<React.SetStateAction<boolean>>) {
 
     const api = new SpaceBookAPI()
 
     await api.userManagement.logout()
     AsyncStorageLib.removeItem('@spacebook_current_user')
 
-    navigator.navigate('PreAuth')
+    setIsAuthed(false)
 
 }
 
@@ -33,7 +34,7 @@ export default function UserEditControls(props: UserEditControlsProps) {
                     letterSpacing: "lg"
                 }} shadow={2}>
                     <Button onPress={() => props.navigator.navigate('AccountSettings', { userID: props.userID, updateTrigger: props.updateTrigger })}>Edit Profile</Button>
-                    <Button colorScheme="secondary" onPress={() => { handleLogout(props.userID, props.navigator) }}>Log Out</Button>
+                    <Button colorScheme="secondary" onPress={() => { handleLogout(props.userID, props.setIsAuthed) }}>Log Out</Button>
                 </Box>
             </View>
         )

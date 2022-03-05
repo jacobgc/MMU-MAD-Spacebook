@@ -1,3 +1,5 @@
+
+
 export type StackedRootStackParamList = {
     PreAuth: undefined;
     Login: undefined;
@@ -6,10 +8,14 @@ export type StackedRootStackParamList = {
 };
 
 export type TabbedRootStackParamList = {
-    Feed: undefined;
     ProfileNavigator: { userID: number };
     Search: undefined;
 };
+
+export type SearchProfileParamList = {
+    SearchProfileNavigator: { userID: number }
+    Profile: { userID: number }
+}
 
 export type StackedTabbedParamList = {
     Profile: { userID: number }

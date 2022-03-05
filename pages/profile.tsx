@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import { SpaceBookAPI } from "../classes/SpaceBookAPI";
 import UserEditControls from "../components/profileControls";
 import { SharedProfile } from "../components/sharedProfile";
-import { StackedTabbedParamList } from "../types/pages";
+import { ProfileNavigatorParamList } from "../navigators/profileNavigator";
+import { AuthedRootNavigator } from "../navigators/rootNavigator";
 import { userInfoResponse } from "../types/responses";
 import getCurrentUser from "../utils/getCurrentUser";
 
-type Props = NativeStackScreenProps<StackedTabbedParamList, 'Profile'>;
+type Props = NativeStackScreenProps<ProfileNavigatorParamList, 'Profile'>;
 export default function Profile({ navigation, route }: Props) {
     let providedUserID = route.params.userID
+
     let [showEditControls, setShowEditControls] = useState<boolean>(false)
     let [user, setUser] = useState<userInfoResponse>({} as userInfoResponse)
     let [needsUpdate, setNeedsUpdate] = useState<boolean>(false)
@@ -45,7 +47,7 @@ export default function Profile({ navigation, route }: Props) {
         <View>
             <Box>
                 <SharedProfile user={user} />
-                <UserEditControls updateTrigger={setNeedsUpdate} show={showEditControls} userID={user.user_id} navigator={navigation} />
+                <UserEditControls updateTrigger={setNeedsUpdate} show={showEditControls} userID={user.user_id} navigator={navigation} setIsAuthed={route.params.setIsAuthed} />
             </Box>
         </View>
     )

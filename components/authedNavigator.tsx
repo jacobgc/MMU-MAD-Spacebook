@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ProfileNavigator from "../pages/profileNavigator";
+import ProfileNavigator from "../navigators/profileNavigator";
 import SearchPage from "../pages/search";
 import { TabbedRootStackParamList } from "../types/pages";
 

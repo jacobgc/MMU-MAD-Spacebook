@@ -1,15 +1,15 @@
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { Text, Box, Stack, Input, Button, Radio, Center, Heading, FlatList, HStack, VStack, Avatar, Spacer, ScrollView } from "native-base";
+import { DrawerScreenProps } from "@react-navigation/drawer";
+import { Text, Box, Stack, Input, Button, Radio, Center, Heading, FlatList, HStack, VStack, Avatar, Spacer, ScrollView, Pressable } from "native-base";
 import React, { useEffect, useState } from "react";
 import AwesomeAlert from "react-native-awesome-alerts";
 import { SpaceBookAPI } from "../classes/SpaceBookAPI";
 import AddFriendButton from "../components/addFriendButton";
-import { TabbedRootStackParamList } from "../types/pages";
+import { AuthedRootNavigator } from "../navigators/rootNavigator";
 import { User } from "../types/user";
 import getCurrentUser from "../utils/getCurrentUser";
 
 
-type Props = BottomTabScreenProps<TabbedRootStackParamList, 'Search'>;
+type Props = DrawerScreenProps<AuthedRootNavigator, 'Search'>;
 export default function SearchPage({ navigation, route }: Props) {
 
     const [searchTerm, setSearchTerm] = useState<string>('')
@@ -83,21 +83,24 @@ export default function SearchPage({ navigation, route }: Props) {
                     borderColor: "gray.600"
                 }} borderColor="coolGray.200" pl="4" pr="5" py="2">
                         <HStack space={3} justifyContent="space-between">
-                            <Avatar size="48px" source={{
-                                uri: item.profilePictureURI
-                            }} />
-                            <VStack>
-                                <Text _dark={{
-                                    color: "warmGray.50"
-                                }} color="coolGray.800" bold>
-                                    {item.first_name} {item.last_name}
-                                </Text>
-                                <Text color="coolGray.600" _dark={{
-                                    color: "warmGray.200"
-                                }}>
-                                    {item.email}
-                                </Text>
-                            </VStack>
+                            <Pressable onPress={() => { navigation.navigate("Profile", { userID: item.user_id }) }}>
+                                <Avatar size="48px" source={{
+                                    uri: item.profilePictureURI
+                                }} />
+                                <VStack>
+                                    <Text _dark={{
+                                        color: "warmGray.50"
+                                    }} color="coolGray.800" bold>
+                                        {item.first_name} {item.last_name}
+                                    </Text>
+                                    <Text color="coolGray.600" _dark={{
+                                        color: "warmGray.200"
+                                    }}>
+                                        {item.email}
+                                    </Text>
+                                </VStack>
+                            </Pressable>
+
                             <Spacer />
                             <Center>
                                 <AddFriendButton setErrorMessage={setErrorMessage} setShowError={setShowError} userID={item.user_id} disabled={isNotFriend(item.user_id)} />
