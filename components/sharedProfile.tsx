@@ -25,7 +25,7 @@ export function SharedProfile(props: sharedProfileProps) {
         shadow={2}
       >
         <Center>
-          <UserProfileImage userID={props.user?.user_id} />
+          <UserProfileImage uri={props.user?.profileURI} />
           <Text fontSize="6xl">
             {props.user?.first_name}
             {' '}

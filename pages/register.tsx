@@ -1,13 +1,12 @@
 import {
-  StyleSheet, View, Text, TextInput, Button,
+  StyleSheet, View, TextInput, Button,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { User } from '../types/user';
 import { StackedRootStackParamList } from '../types/pages';
-import { postRequestJSON } from '../utils/requests';
-import { SpaceBookAPI } from '../classes/SpaceBookAPI';
+import SpaceBookAPI from '../classes/SpaceBookAPI';
 
 export type UserProfileProps = {
     user: User;

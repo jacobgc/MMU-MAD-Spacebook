@@ -15,6 +15,7 @@ export type userInfoResponse = {
     last_name: string,
     email: string,
     friend_count: number
+    profileURI?: string
 }
 
 export type searchResponse = {

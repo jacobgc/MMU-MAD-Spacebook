@@ -15,6 +15,7 @@ export default function Profile({ navigation, route }: Props) {
   const [showEditControls, setShowEditControls] = useState<boolean>(false);
   const [user, setUser] = useState<userInfoResponse>({} as userInfoResponse);
   const [needsUpdate, setNeedsUpdate] = useState<boolean>(false);
+  const [needsProfileImageUpdate, setNeedsProfileImageUpdate] = useState<number>(0);
 
   useEffect(() => {
     async function loadProfile() {
@@ -33,6 +34,8 @@ export default function Profile({ navigation, route }: Props) {
 
       const api = new SpaceBookAPI();
       const userResponse = await api.userManagement.getUserInfo(userIDToLoad);
+      const image = await api.userManagement.getProfileImage(userIDToLoad);
+      userResponse.profileURI = image;
 
       setUser(userResponse);
       setNeedsUpdate(false);

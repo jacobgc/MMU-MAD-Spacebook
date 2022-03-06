@@ -1,5 +1,5 @@
 import {
-  getRequestBinary, getRequestJSON, patchRequestText, postRequestJSON, postRequestText,
+  getRequestBinary, getRequestJSON, patchRequestText, postRequestBinary, postRequestJSON, postRequestText,
 } from '../utils/requests';
 import { userInfoResponse, loginResponse, registerResponse } from '../types/responses';
 
@@ -59,5 +59,9 @@ export default class UserManagementAPI {
     }
 
     await patchRequestText(`${this.API_BASE}/user/${id}`, dataToSend, true);
+  }
+
+  async updateProfileImage(id: number, image: Blob, fileType: string): Promise<void> {
+    await postRequestBinary(`${this.API_BASE}/user/${id}/photo`, true, image, fileType);
   }
 }
