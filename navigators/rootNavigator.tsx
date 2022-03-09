@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React, { useState } from 'react';
+import FriendRequestsPage from '../pages/friendRequests';
 import AuthenticationNavigator from './authenticationNavigator';
 import ProfileNavigator from './profileNavigator';
 import SearchNavigator from './searchNavigator';
@@ -17,6 +18,9 @@ export type AuthedRootNavigatorParams = {
         setIsAuthed: React.Dispatch<React.SetStateAction<boolean>>
     };
     Search: undefined;
+    FriendRequests: {
+      userID: number
+    }
 }
 
 export default function RootNavigator() {
@@ -38,6 +42,7 @@ export default function RootNavigator() {
       <AuthedDrawer.Group>
         <AuthedDrawer.Screen name="Profile" options={{ headerTitle: 'My Profile' }} initialParams={{ userID: 0, setIsAuthed }} component={ProfileNavigator} />
         <AuthedDrawer.Screen name="Search" component={SearchNavigator} />
+        <AuthedDrawer.Screen name="FriendRequests" options={{ title: 'Friend Requests' }} component={FriendRequestsPage} />
       </AuthedDrawer.Group>
 
     </AuthedDrawer.Navigator>

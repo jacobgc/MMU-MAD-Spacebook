@@ -1,6 +1,6 @@
-import { searchResponse } from '../types/responses';
+import { friendRequestsResponse, searchResponse } from '../types/responses';
 import { User } from '../types/user';
-import { getRequestJSON, postRequestText } from '../utils/requests';
+import { deleteRequestText, getRequestJSON, postRequestText } from '../utils/requests';
 import SpaceBookAPI from './SpaceBookAPI';
 
 export default class FriendManagementAPI {
@@ -42,6 +42,30 @@ export default class FriendManagementAPI {
     }
 
     return realResults;
+  }
+
+  async getFriendRequests() {
+    const results = await getRequestJSON(`${this.API_BASE}/friendrequests`, true) as friendRequestsResponse[];
+
+    return results;
+  }
+
+  /**
+   * Accepts a friend request from the given user
+   *
+   * Note: Will only fail on network error
+   */
+  async acceptFriendRequest(userID: number) {
+    await postRequestText(`${this.API_BASE}/friendrequests/${userID}`, {}, true);
+  }
+
+  /**
+   * Rejects a friend request from the given user
+   *
+   * Note: Will only fail on network error
+   */
+  async rejectFriendRequest(userID: number) {
+    await deleteRequestText(`${this.API_BASE}/friendrequests/${userID}`, {}, true);
   }
 
   async addFriend(id: number): Promise<string> {

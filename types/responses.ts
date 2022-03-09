@@ -24,3 +24,10 @@ export type searchResponse = {
     user_familyname: string,
     user_email: string
 }
+
+export type friendRequestsResponse = {
+    user_id: number,
+    first_name: string
+    last_name: string
+    email: string
+}

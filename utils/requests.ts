@@ -25,6 +25,35 @@ export async function postRequestJSON(url: string, data: object): Promise<object
   }
 }
 
+export async function deleteRequestText(url: string, data: object, authed: boolean): Promise<string> {
+  // Default options are marked with *
+
+  const authKey = await getAuthKey();
+
+  const response = await fetch(url, {
+    method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Authorization': (authed) ? authKey : '',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+
+  try {
+    // Clone so we don't use up the response if it fails to parse the text
+    const parsedResponse = await response.clone().text();
+    return parsedResponse;
+  } catch (error) {
+    throw new Error(await response.text());
+  }
+}
+
 export async function postRequestText(url: string, data: object, authed: boolean): Promise<string> {
   // Default options are marked with *
 

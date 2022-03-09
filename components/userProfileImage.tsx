@@ -17,7 +17,6 @@ export default function UserProfileImage(props: UserProfileImagesProps) {
           uri: props.uri,
         }}
       />
-
     </View>
   );
 }
