@@ -1,7 +1,8 @@
 import getAuthKey from './getAuthKey';
 
-export async function postRequestJSON(url: string, data: object): Promise<object> {
+export async function postRequestJSON(url: string, data: object, authed: boolean = false): Promise<object> {
   // Default options are marked with *
+  const authKey = await getAuthKey();
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -9,6 +10,7 @@ export async function postRequestJSON(url: string, data: object): Promise<object
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
       'Content-Type': 'application/json',
+      'X-Authorization': (authed) ? authKey : '',
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     redirect: 'follow', // manual, *follow, error
@@ -16,12 +18,16 @@ export async function postRequestJSON(url: string, data: object): Promise<object
     body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
 
-  try {
-    // Clone so we don't use up the response if it fails to parse the JSON
-    const parsedResponse = await response.clone().json();
-    return parsedResponse;
-  } catch (error) {
-    throw new Error(await response.text());
+  if (response.ok) {
+    try {
+      // Clone so we don't use up the response if it fails to parse the JSON
+      const parsedResponse = await response.clone().json();
+      return parsedResponse;
+    } catch (error) {
+      throw new Error(await response.text());
+    }
+  } else {
+    return Promise.reject(new Error('Failed to add Post'));
   }
 }
 
@@ -74,11 +80,15 @@ export async function postRequestText(url: string, data: object, authed: boolean
     body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
 
-  try {
-    // Clone so we don't use up the response if it fails to parse the text
-    const parsedResponse = await response.clone().text();
-    return parsedResponse;
-  } catch (error) {
+  if (response.ok) {
+    try {
+      // Clone so we don't use up the response if it fails to parse the text
+      const parsedResponse = await response.clone().text();
+      return parsedResponse;
+    } catch (error) {
+      throw new Error(await response.text());
+    }
+  } else {
     throw new Error(await response.text());
   }
 }

@@ -1,6 +1,7 @@
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import AccountSettingsPage from '../pages/accountSettings';
+import AddPostPage from '../pages/addPost';
 import Profile from '../pages/profile';
 import { AuthedRootNavigatorParams } from './rootNavigator';
 
@@ -9,7 +10,13 @@ export type ProfileNavigatorParamList = {
         userID: number,
         setIsAuthed?: React.Dispatch<React.SetStateAction<boolean>>
     }
-    AccountSettings: { userID: number, updateTrigger: React.Dispatch<React.SetStateAction<boolean>> };
+    AccountSettings: {
+      userID: number,
+      updateTrigger: React.Dispatch<React.SetStateAction<boolean>>
+    };
+    AddPost: {
+      userID: number
+    }
 }
 
 type Props = NativeStackScreenProps<AuthedRootNavigatorParams, 'Profile'>;
@@ -19,6 +26,7 @@ export default function ProfileNavigator({ route }: Props) {
     <Stack.Navigator initialRouteName="Profile">
       <Stack.Screen name="Profile" component={Profile} initialParams={{ userID: route.params.userID, setIsAuthed: route.params.setIsAuthed }} options={{ headerShown: false }} />
       <Stack.Screen name="AccountSettings" component={AccountSettingsPage} />
+      <Stack.Screen name="AddPost" component={AddPostPage} />
     </Stack.Navigator>
   );
 }

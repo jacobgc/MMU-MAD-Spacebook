@@ -1,14 +1,16 @@
 import AsyncStorageLib from '@react-native-async-storage/async-storage';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { View, Box, Button } from 'native-base';
+import {
+  View, Box, Button, Divider,
+} from 'native-base';
 import React from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import SpaceBookAPI from '../classes/SpaceBookAPI';
-import { StackedTabbedParamList } from '../types/pages';
+import { ProfileNavigatorParamList } from '../navigators/profileNavigator';
 
 export type UserEditControlsProps = {
     userID: number;
-    navigator: NativeStackNavigationProp<StackedTabbedParamList, 'Profile'>
+    navigator: NativeStackNavigationProp<ProfileNavigatorParamList, 'Profile'>
     setIsAuthed?: React.Dispatch<React.SetStateAction<boolean>>
     show: boolean
     updateTrigger: React.Dispatch<React.SetStateAction<boolean>>
@@ -61,6 +63,7 @@ export default function UserEditControls(props: UserEditControlsProps) {
         >
           <Button onPress={() => props.navigator.navigate('AccountSettings', { userID: props.userID, updateTrigger: props.updateTrigger })}>Edit Profile</Button>
           <Button onPress={() => changeProfilePicture(props.userID, props.updateTrigger)}>Change Profile Image</Button>
+          <Divider my="2" />
           <Button colorScheme="secondary" onPress={() => { handleLogout(props.userID, props.setIsAuthed); }}>Log Out</Button>
         </Box>
       </View>

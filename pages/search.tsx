@@ -21,32 +21,29 @@ export default function SearchPage({ navigation }: Props) {
 
   const api = new SpaceBookAPI();
 
-  useEffect(() => {
-    async function getFriends() {
-      const currentUser = await getCurrentUser();
-      if (currentUser) {
-        const currentFriends = await api.friendManagement.getFriends(currentUser?.id);
-        setMyFriends(currentFriends);
-
-        console.log(currentFriends);
-      }
+  async function getFriends() {
+    const currentUser = await getCurrentUser();
+    if (currentUser) {
+      const currentFriends = await api.friendManagement.getFriends(currentUser?.id);
+      setMyFriends(currentFriends);
     }
-
+  }
+  useEffect(() => {
     getFriends();
   }, []);
 
   async function search() {
+    await getFriends();
     const localResults = await api.friendManagement.search(searchTerm, searchScope, 0);
-    console.log(localResults);
     setResults(localResults);
   }
 
   function isNotFriend(id: number) {
-    const index = myFriends.findIndex((friendID) => friendID == id);
-    if (index == 0) {
-      return true;
+    const index = myFriends.findIndex((friendID) => friendID === id);
+    if (index === -1) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   return (
