@@ -101,8 +101,8 @@ export default function Profile({ navigation, route }: Props) {
       <Box>
         <SharedProfile user={user} />
         <UserEditControls updateTrigger={setNeedsUpdate} show={showEditControls} userID={user.user_id} navigator={navigation} setIsAuthed={route.params.setIsAuthed} />
-        <AddPostButton navigator={navigation} userID={user.user_id} show={showMakePost} />
-        <PostList showAlert={quickShowAlert} currentUser={currentUser.id} profileID={user.user_id} posts={posts} />
+        <AddPostButton updateTrigger={setNeedsUpdate} navigator={navigation} userID={user.user_id} show={showMakePost} />
+        <PostList getPosts={getPosts} showAlert={quickShowAlert} currentUser={currentUser.id} profileID={user.user_id} posts={posts} />
       </Box>
 
       <AwesomeAlert

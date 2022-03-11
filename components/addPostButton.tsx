@@ -8,7 +8,8 @@ import { ProfileNavigatorParamList } from '../navigators/profileNavigator';
 export type AddPostProps = {
     show: boolean,
     navigator: NativeStackNavigationProp<ProfileNavigatorParamList, 'Profile'>,
-    userID: number
+    userID: number,
+    updateTrigger: React.Dispatch<React.SetStateAction<boolean>>
 };
 
 export default function AddPostButton(props: AddPostProps) {
@@ -17,7 +18,7 @@ export default function AddPostButton(props: AddPostProps) {
       <View>
         <Divider my="2" />
         <Center>
-          <Button w="75%" onPress={() => props.navigator.navigate('AddPost', { userID: props.userID })}>Add New Post</Button>
+          <Button w="75%" onPress={() => props.navigator.navigate('AddPost', { userID: props.userID, updateTrigger: props.updateTrigger })}>Add New Post</Button>
         </Center>
       </View>
     );

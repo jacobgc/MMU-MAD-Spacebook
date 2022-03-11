@@ -1,7 +1,7 @@
 import {
-  Avatar, Box, Button, Center, Divider, FlatList, Heading, HStack, Pressable, Text, VStack,
+  Avatar, Box, Center, Divider, FlatList, Heading, HStack, Text, VStack,
 } from 'native-base';
-import { React } from 'react';
+import React from 'react';
 import { Post } from '../types/post';
 import EditPostButton from './editPostButton';
 import LikePostButtons from './likePostButtons';
@@ -10,7 +10,10 @@ export type postListProps = {
   posts: Post[],
   currentUser: number,
   profileID: number
+  // eslint-disable-next-line no-unused-vars
   showAlert(title: string, message: string): void
+  // eslint-disable-next-line no-unused-vars
+  getPosts(userID: number): void
 };
 
 export default function PostList(props: postListProps) {
@@ -71,9 +74,25 @@ export default function PostList(props: postListProps) {
             <Text>
               {item.text}
             </Text>
+            <Text>
+              Post Likes: {item.numLikes}
+            </Text>
             <HStack justifyContent="space-between">
-              <LikePostButtons showAlert={props.showAlert} postID={item.post_id} profileID={props.profileID} authorID={item.author.user_id} currentUserID={props.currentUser} />
-              <EditPostButton authorID={item.author.user_id} currentUserID={props.currentUser} />
+              <LikePostButtons
+                getPosts={props.getPosts}
+                showAlert={props.showAlert}
+                postID={item.post_id}
+                profileID={props.profileID}
+                authorID={item.author.user_id}
+                currentUserID={props.currentUser}
+              />
+              <EditPostButton
+                getPosts={props.getPosts}
+                currentProfileID={props.profileID}
+                postID={item.post_id}
+                authorID={item.author.user_id}
+                currentUserID={props.currentUser}
+              />
             </HStack>
             <Divider my="2" />
 

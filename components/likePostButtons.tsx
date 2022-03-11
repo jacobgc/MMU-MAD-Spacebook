@@ -11,6 +11,8 @@ export type likePostButtonsProps = {
   postID: number
   // eslint-disable-next-line no-unused-vars
   showAlert(title: string, message: string): void
+  // eslint-disable-next-line no-unused-vars
+  getPosts(userID: number): void
 
 };
 
@@ -20,6 +22,7 @@ export default function LikePostButtons(props: likePostButtonsProps) {
   async function likePost() {
     try {
       await api.postManagement.likePost(props.profileID, props.postID);
+      props.getPosts(props.profileID);
       props.showAlert('Post Liked Successfully', '');
     } catch (error) {
       const err = error as Error;
@@ -34,6 +37,7 @@ export default function LikePostButtons(props: likePostButtonsProps) {
   async function unlikePost() {
     try {
       await api.postManagement.dislikePost(props.profileID, props.postID);
+      props.getPosts(props.profileID);
       props.showAlert('Post like removed Successfully', '');
     } catch (error) {
       const err = error as Error;

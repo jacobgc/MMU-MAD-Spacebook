@@ -15,6 +15,7 @@ export default function AddPostPage({ navigation, route }: Props) {
     if (postText.length !== 0) {
       try {
         await api.postManagement.addPost(route.params.userID, postText);
+        route.params.updateTrigger(true);
         navigation.goBack();
       } catch (error) {
       // TODO show error

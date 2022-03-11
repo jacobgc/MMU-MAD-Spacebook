@@ -16,6 +16,7 @@ export type ProfileNavigatorParamList = {
     };
     AddPost: {
       userID: number
+      updateTrigger: React.Dispatch<React.SetStateAction<boolean>>
     }
 }
 
