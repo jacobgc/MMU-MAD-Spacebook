@@ -1,8 +1,10 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
   View, Button, HStack,
 } from 'native-base';
 import React from 'react';
 import SpaceBookAPI from '../classes/SpaceBookAPI';
+import { ProfileNavigatorParamList } from '../navigators/profileNavigator';
 
 export type editPostButtonProps = {
   authorID: number
@@ -11,6 +13,7 @@ export type editPostButtonProps = {
   currentUserID: number
   // eslint-disable-next-line no-unused-vars
   getPosts(userID: number): void
+  navigator: NativeStackNavigationProp<ProfileNavigatorParamList, 'Profile'>
 
 };
 
@@ -28,7 +31,7 @@ export default function EditPostButton(props: editPostButtonProps) {
   if (props.authorID === props.currentUserID) {
     return (
       <HStack justifyContent="space-between">
-        <Button>Edit</Button>
+        <Button onPress={() => { props.navigator.navigate('EditPost', { userID: props.currentProfileID, postID: props.postID, updateTrigger: props.getPosts }); }}>Edit</Button>
         <Button backgroundColor="danger.700" onPress={() => deletePost()}>🗑️</Button>
       </HStack>
     );

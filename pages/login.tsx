@@ -1,6 +1,6 @@
 import {
-  StyleSheet, View, Button, TextInput,
-} from 'react-native';
+  View, Button, Input,
+} from 'native-base';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -47,19 +47,11 @@ export default function LoginPage({ route }: Props) {
     }
   }
 
-  const styles = StyleSheet.create({
-    topContent: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-
   return (
-    <View style={styles.topContent}>
-      <TextInput placeholder="Email" onChangeText={(textVal) => { setEmail(textVal); }} />
-      <TextInput secureTextEntry placeholder="Password" onChangeText={(textVal) => { setPassword(textVal); }} />
-      <Button title="LOGIN" onPress={() => { attemptLogin(); }} />
+    <View justifyContent="center">
+      <Input placeholder="Email" onChangeText={(textVal) => { setEmail(textVal); }} />
+      <Input secureTextEntry placeholder="Password" onChangeText={(textVal) => { setPassword(textVal); }} />
+      <Button onPress={() => { attemptLogin(); }}>LOGIN</Button>
 
       <AwesomeAlert
         show={showError}

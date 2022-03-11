@@ -1,7 +1,9 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
   Avatar, Box, Center, Divider, FlatList, Heading, HStack, Text, VStack,
 } from 'native-base';
 import React from 'react';
+import { ProfileNavigatorParamList } from '../navigators/profileNavigator';
 import { Post } from '../types/post';
 import EditPostButton from './editPostButton';
 import LikePostButtons from './likePostButtons';
@@ -14,6 +16,7 @@ export type postListProps = {
   showAlert(title: string, message: string): void
   // eslint-disable-next-line no-unused-vars
   getPosts(userID: number): void
+  navigator: NativeStackNavigationProp<ProfileNavigatorParamList, 'Profile'>
 };
 
 export default function PostList(props: postListProps) {
@@ -87,6 +90,7 @@ export default function PostList(props: postListProps) {
                 currentUserID={props.currentUser}
               />
               <EditPostButton
+                navigator={props.navigator}
                 getPosts={props.getPosts}
                 currentProfileID={props.profileID}
                 postID={item.post_id}

@@ -1,8 +1,8 @@
 import {
-  StyleSheet, View, TextInput, Button,
-} from 'react-native';
+  View, Button, Input,
+} from 'native-base';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { User } from '../types/user';
 import { StackedRootStackParamList } from '../types/pages';
@@ -54,15 +54,15 @@ export default function RegisterPage({ navigation }: Props) {
   }
 
   return (
-    <View style={styles.topContent}>
+    <View>
 
-      <TextInput placeholder="First Name" onChangeText={(textVal) => { setFirstName(textVal); }} />
-      <TextInput placeholder="Last Name" onChangeText={(textVal) => { setLastName(textVal); }} />
-      <TextInput placeholder="Email" onChangeText={(textVal) => { setEmail(textVal); }} />
-      <TextInput secureTextEntry placeholder="Password" onChangeText={(textVal) => { setPassword(textVal); }} />
-      <TextInput secureTextEntry placeholder="Confirm Password" onChangeText={(textVal) => { setConfirmPassword(textVal); }} />
+      <Input placeholder="First Name" onChangeText={(textVal) => { setFirstName(textVal); }} />
+      <Input placeholder="Last Name" onChangeText={(textVal) => { setLastName(textVal); }} />
+      <Input placeholder="Email" onChangeText={(textVal) => { setEmail(textVal); }} />
+      <Input secureTextEntry placeholder="Password" onChangeText={(textVal) => { setPassword(textVal); }} />
+      <Input secureTextEntry placeholder="Confirm Password" onChangeText={(textVal) => { setConfirmPassword(textVal); }} />
 
-      <Button title="Register" onPress={register} />
+      <Button onPress={() => { register(); }}>Register</Button>
 
       <AwesomeAlert
         show={showSuccess}
@@ -98,11 +98,3 @@ export default function RegisterPage({ navigation }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  topContent: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

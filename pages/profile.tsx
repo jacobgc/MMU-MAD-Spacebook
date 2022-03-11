@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { View, Box, ScrollView } from 'native-base';
+import { Box, ScrollView } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import SpaceBookAPI from '../classes/SpaceBookAPI';
@@ -102,7 +102,7 @@ export default function Profile({ navigation, route }: Props) {
         <SharedProfile user={user} />
         <UserEditControls updateTrigger={setNeedsUpdate} show={showEditControls} userID={user.user_id} navigator={navigation} setIsAuthed={route.params.setIsAuthed} />
         <AddPostButton updateTrigger={setNeedsUpdate} navigator={navigation} userID={user.user_id} show={showMakePost} />
-        <PostList getPosts={getPosts} showAlert={quickShowAlert} currentUser={currentUser.id} profileID={user.user_id} posts={posts} />
+        <PostList navigator={navigation} getPosts={getPosts} showAlert={quickShowAlert} currentUser={currentUser.id} profileID={user.user_id} posts={posts} />
       </Box>
 
       <AwesomeAlert
